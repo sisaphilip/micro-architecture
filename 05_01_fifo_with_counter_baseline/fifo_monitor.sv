@@ -31,15 +31,15 @@ module fifo_monitor
         begin
             // Checking
 
-            assert (~ (push & full & ~ (pop & allow_push_when_full_with_pop)));
-            assert (~ (pop  & empty));
+       assert (~ (push & full & ~ (pop & allow_push_when_full_with_pop)));
+       assert (~ (pop  & empty));
 
             assert (~ ( queue.size () == 0     & ~ empty ));
             assert (~ ( queue.size () == depth & ~ full  ));
 
             // The following assertions
             // will not work with some FIFO microarchitectures.
-            // An exam/interview question: what kind of microarchitectures?
+           // An exam/interview question: what kind of microarchitectures?
             //
             // assert ( empty == ( queue.size () == 0     ));
             // assert ( full  == ( queue.size () == depth ));
@@ -56,7 +56,7 @@ module fifo_monitor
             if (pop & queue.size () > 0)
             begin
                 `ifdef __ICARUS__
-                    // Some version of Icarus has a bug, and this is a workaround
+           // Some version of Icarus has a bug, and this is a workaround
                     queue.delete (0);
                 `else
                     dummy = queue.pop_front ();

@@ -1,6 +1,6 @@
 module ff_fifo_pow2_depth
 # (
-    parameter width = 0, depth = 0
+    parameter width = 64, depth = 512
 )
 (
     input                clk,
@@ -37,9 +37,13 @@ module ff_fifo_pow2_depth
         else if (push)
             ext_wr_ptr <= ext_wr_ptr + 1'b1;
 
-    // Task: Add logic for ext_rd_ptr
+    // task: add logic for ext_rd_ptr
+    always_ff @ (posedge clk or posedge rst)
+       if (rst)
+           ext_rd_ptr <= '0;
+       else if (pop)
+           ext_rd_ptr <= ext_rd_ptr + 1'b1;
 
-    //--------------------------------------------------------------------------
 
     always_ff @ (posedge clk)
         if (push)
@@ -47,12 +51,12 @@ module ff_fifo_pow2_depth
 
     assign read_data = data [rd_ptr];
 
-    //--------------------------------------------------------------------------
-
-    // Example
-    assign full =   rd_ptr == wr_ptr
+    //-------------------------------------------------------------------------    // Example
+    assign full  =   rd_ptr == wr_ptr
                   & ext_rd_ptr [pointer_width] != ext_wr_ptr [pointer_width];
-
-    // Task: Add logic for empty output using full as an example
-
+   
+    // Task: add logic for empty output using full as an example
+   
+    assign empty = rd_ptr == wr_ptr
+                  & ext_rd_ptr [pointer_width] == ext_wr_ptr [pointer_width];        
 endmodule

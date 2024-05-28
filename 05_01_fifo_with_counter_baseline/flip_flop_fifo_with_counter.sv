@@ -1,7 +1,4 @@
-//----------------------------------------------------------------------------
 // Example
-//----------------------------------------------------------------------------
-
 module flip_flop_fifo_with_counter
 # (
     parameter width = 8, depth = 10
@@ -17,21 +14,21 @@ module flip_flop_fifo_with_counter
     output               full
 );
 
-    //------------------------------------------------------------------------
-
-    localparam pointer_width = $clog2 (depth),
+//------------------------------------------------------------------------
+// $clog2 for minimum address width that can cover memory size
+    localparam pointer_width = $clog2 (depth),    
                counter_width = $clog2 (depth + 1);
 
     localparam [counter_width - 1:0] max_ptr = counter_width' (depth - 1);
 
-    //------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
     logic [pointer_width - 1:0] wr_ptr, rd_ptr;
     logic [counter_width - 1:0] cnt;
 
     logic [width - 1:0] data [0: depth - 1];
 
-    //------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
     always_ff @ (posedge clk or posedge rst)
         if (rst)
@@ -45,7 +42,7 @@ module flip_flop_fifo_with_counter
         else if (pop)
             rd_ptr <= rd_ptr == max_ptr ? '0 : rd_ptr + 1'b1;
 
-    //------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
     always_ff @ (posedge clk)
         if (push)
@@ -53,7 +50,7 @@ module flip_flop_fifo_with_counter
 
     assign read_data = data [rd_ptr];
 
-    //------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
     always_ff @ (posedge clk or posedge rst)
         if (rst)
@@ -63,7 +60,7 @@ module flip_flop_fifo_with_counter
         else if (pop & ~ push)
             cnt <= cnt - 1'b1;
 
-    //------------------------------------------------------------------------
+//------------------------------------------------------------------------
 
     assign empty = (cnt == '0);  // Same as "~| cnt"
     assign full = (cnt == depth);
