@@ -28,6 +28,7 @@ module flip_flop_fifo_with_counter
 
     logic [width - 1:0] data [0: depth - 1];
 
+
 //------------------------------------------------------------------------
 
     always_ff @ (posedge clk or posedge rst)
@@ -61,6 +62,7 @@ module flip_flop_fifo_with_counter
             cnt <= cnt - 1'b1;
 
 //------------------------------------------------------------------------
+
 
     assign empty = (cnt == '0);  // Same as "~| cnt"
     assign full = (cnt == depth);

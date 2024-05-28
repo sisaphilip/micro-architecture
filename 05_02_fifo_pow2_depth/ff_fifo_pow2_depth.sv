@@ -44,7 +44,6 @@ module ff_fifo_pow2_depth
        else if (pop)
            ext_rd_ptr <= ext_rd_ptr + 1'b1;
 
-
     always_ff @ (posedge clk)
         if (push)
             data [wr_ptr] <= write_data;
@@ -59,4 +58,6 @@ module ff_fifo_pow2_depth
    
     assign empty = rd_ptr == wr_ptr
                   & ext_rd_ptr [pointer_width] == ext_wr_ptr [pointer_width];        
-endmodule
+    
+
+                  endmodule
