@@ -12,25 +12,19 @@ module flip_flop_fifo_empty_full_optimized
     output               empty,
     output               full
 );
-
     //------------------------------------------------------------------------
-
     localparam pointer_width = $clog2 (depth),
                counter_width = $clog2 (depth + 1);
 
     localparam [counter_width - 1:0] max_ptr = counter_width' (depth - 1);
-
     //------------------------------------------------------------------------
-
     logic [pointer_width - 1:0] wr_ptr, rd_ptr;
     logic wr_ptr_odd_circle, rd_ptr_odd_circle;
 
     logic [width - 1:0] data [0: depth - 1];
-
     //------------------------------------------------------------------------
     // Example
     //------------------------------------------------------------------------
-
     always_ff @ (posedge clk or posedge rst)
         if (rst)
         begin
@@ -49,14 +43,26 @@ module flip_flop_fifo_empty_full_optimized
                 wr_ptr <= wr_ptr + 1'b1;
             end
         end
-
     //------------------------------------------------------------------------
     // Task: Add logic for read pointer
     //------------------------------------------------------------------------
-
     // TODO: Add logic for rd_ptr
-
     //------------------------------------------------------------------------
+always_ff @ (posedge clk or posedge rst)
+    if (rst)
+      begin 
+      rd_ptr <= '0;
+      rd_ptr_odd_circle <= 1'b0;
+  end
+    else if (pop)
+    begin
+        if (rd_ptr == max_ptr) begin
+           rd_ptr <= '0;
+           rd_ptr_odd_circle <= ~ rd_ptr_odd_circle;
+        end
+        else
+            rd_ptr <= rd_ptr + 1'b1;
+    end
 
     always_ff @ (posedge clk)
         if (push)
@@ -71,7 +77,7 @@ module flip_flop_fifo_empty_full_optimized
 
     // Example
     assign empty = equal_ptrs & same_circle;
-
+    
     // Task: Add logic for full output
-
+    assign full  = equal_ptrs & ~same_circle;
 endmodule
