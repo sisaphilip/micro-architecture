@@ -12,7 +12,6 @@ module ff_fifo_pow2_depth
     output               empty,
     output               full
 );
-
     localparam pointer_width          = $clog2 (depth),
                extended_pointer_width = pointer_width + 1;
 
@@ -50,14 +49,15 @@ module ff_fifo_pow2_depth
 
     assign read_data = data [rd_ptr];
 
-    //-------------------------------------------------------------------------    // Example
+//--------------------------------------------------------------------    // Example
     assign full  =   rd_ptr == wr_ptr
                   & ext_rd_ptr [pointer_width] != ext_wr_ptr [pointer_width];
-   
+ 
+
     // Task: add logic for empty output using full as an example
    
     assign empty = rd_ptr == wr_ptr
      & ext_rd_ptr [extended_pointer_width -1] == ext_wr_ptr [extended_pointer_width -1];        
-    // extended_pointer_width-1 same as pointer_width **sisa M
+    // extended_pointer_width-1 same as pointer_width[msb] **sisa M
 
      endmodule

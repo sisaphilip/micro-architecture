@@ -72,6 +72,7 @@ always_ff @ (posedge clk or posedge rst)
 
     //------------------------------------------------------------------------
 
+
     wire equal_ptrs  = (wr_ptr == rd_ptr);
     wire same_circle = (wr_ptr_odd_circle == rd_ptr_odd_circle);
 
