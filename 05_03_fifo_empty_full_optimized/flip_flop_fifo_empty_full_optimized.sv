@@ -58,7 +58,7 @@ always_ff @ (posedge clk or posedge rst)
     begin
         if (rd_ptr == max_ptr) begin
            rd_ptr <= '0;
-           rd_ptr_odd_circle <= ~ rd_ptr_odd_circle;
+           rd_ptr_odd_circle <= ~rd_ptr_odd_circle;
         end
         else
             rd_ptr <= rd_ptr + 1'b1;
