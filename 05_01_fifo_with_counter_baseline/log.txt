@@ -114,5 +114,5 @@ push f6                     [ f6 68 2a 2b ]
 push e1                     [ e1 f6 68 2a ]
          pop 2a             [ e1 f6 68 ]
 push 2c  pop 68             [ 2c e1 f6 ]
-tb.sv PASS
+tb.sv PASS               
 tb.sv:166: $finish called at 1536 (1s)
