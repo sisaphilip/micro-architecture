@@ -49,7 +49,7 @@ module a_plus_b_using_fifos_and_double_buffer
      assign a_fifo_push       = a_ready & a_valid;  
      
      assign a_fifo_write_data = a_data;   
-      
+
     //------------------------------------------------------------------------
     wire               b_fifo_push;
     wire               b_fifo_pop;
@@ -76,7 +76,7 @@ module a_plus_b_using_fifos_and_double_buffer
 
      assign b_ready           = ~b_fifo_full ? 1'b1 : 0;
      
-     assign b_fifo_push       = b_ready & b_valid;
+     assign b_fifo_push       = b_valid & b_ready;
      assign b_fifo_write_data = b_data;
 
     //------------------------------------------------------------------------
@@ -88,10 +88,10 @@ module a_plus_b_using_fifos_and_double_buffer
      wire               sum_up_ready;
      
      wire [width - 1:0] sum_up_data  = a_fifo_read_data + b_fifo_read_data;
-
-assign a_fifo_pop = ~a_fifo_empty &(a_ready? a_valid:1'b0);
-assign b_fifo_pop = ~b_fifo_empty &(b_ready? b_valid:1'b0);
-     //-----------------------------------------------------------------------
+     
+     assign a_fifo_pop = ~a_fifo_empty & a_valid;//(sum_up_ready | sum_up_valid);
+     assign b_fifo_pop = ~b_fifo_empty & b_valid;//(sum_up_ready | sum_up_valid);
+     //------------------------------------------------------------------------
 
     double_buffer_from_dally_harting
     # (.width (width))
