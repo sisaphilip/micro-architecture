@@ -13,6 +13,7 @@ module formula_2_pipe_using_fifos
     output [31:0] res
 );
 
+//-------------STAGE_1---------------------------------------------------------
 
 logic [31:0] a_fifo_out,b_fifo_out;
 
@@ -25,7 +26,7 @@ flip_flop_fifo_with_counter #(32,8) a_fifo(
   .write_data(a),
   .read_data(a_fifo_out),
   .empty(),
-  .full());|
+  .full());
 
 //fifo for b input
 flip_flop_fifo_with_counter #(32,8) b_fifo(
@@ -37,17 +38,16 @@ flip_flop_fifo_with_counter #(32,8) b_fifo(
   .read_data(b_fifo_out),
   .empty(),
   .full());
-//---------STAGE_1---------------------------------------------------------
+
 //---------Stage 1 sqrt fn for c-------------------------------------------
 
 logic cy_vld;
-logic [14:0] cy;
+logic [31:0] cy;
 logic [31:0] stage_1_sum, stage_1_sum_q;
 
-isqrt #(16) _isqrt1           
+isqrt #(8) _isqrt1           
 (                          
-    .clk(clk),.rst(rst),.x_vld(arg_vld),.x(c),.y_vld(cy_vld),.y(cy)       
-   );
+    .clk(clk),.rst(rst),.x_vld(arg_vld),.x(c),.y_vld(cy_vld),.y(cy));
  
  assign stage_1_sum = cy + b_fifo_out;    
  
@@ -56,20 +56,20 @@ isqrt #(16) _isqrt1
  
  always_ff @(posedge clk)
      if (rst)
-         stage_1_sum_q  <= '0;
+         stage_1_sum_q     <= '0;
        else begin
-         stage_1_sum_q      <= stage_1_sum;
-         a_fifo_outdelayed  <= a_fifo_out;
+         stage_1_sum_q     <= stage_1_sum;
+         a_fifo_outdelayed <= a_fifo_out;
       end
 //---------STAGE 2-----------------------------------------------------------
 
-logic [14:0] by;
+logic [31:0] by;
 logic by_vld;
 logic [31:0] stage_2_sum, stage_2_sum_q;
 
 //---------stage 2 isqrt ---------------------------------------------------
-isqrt #(16) _isqrt2 
-(.clk(clk), .rst(rst), .x_vld(arg_vld), .x(stage_1_sum_q),
+isqrt #(8) _isqrt2 
+(   .clk(clk), .rst(rst), .x_vld(arg_vld), .x(stage_1_sum_q),
     .y_vld(by_vld), .y(by));
 
 assign stage_2_sum = by + a_fifo_outdelayed;
@@ -85,7 +85,7 @@ assign stage_2_sum = by + a_fifo_outdelayed;
 
 //--------STAGE 3 ----------------------------------------------------------
 
-isqrt #(16) _isqrt3
+isqrt #(8) _isqrt3
 (.clk(clk), .rst(rst), .x_vld(arg_vld), .x(stage_2_sum_q),
     .y_vld(res_vld), .y(res));
 

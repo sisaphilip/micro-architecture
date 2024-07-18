@@ -1,7 +1,7 @@
-05_06_formula_2_pipe_using_fifos.sv:47: warning: Port 6 (y) of isqrt expects 16 bits, got 15.
-05_06_formula_2_pipe_using_fifos.sv:47:        : Padding 1 high bits of the port.
-05_06_formula_2_pipe_using_fifos.sv:71: warning: Port 6 (y) of isqrt expects 16 bits, got 15.
-05_06_formula_2_pipe_using_fifos.sv:71:        : Padding 1 high bits of the port.
+05_06_formula_2_pipe_using_fifos.sv:48: warning: Port 6 (y) of isqrt expects 16 bits, got 32.
+05_06_formula_2_pipe_using_fifos.sv:48:        : Padding 16 high bits of the expression.
+05_06_formula_2_pipe_using_fifos.sv:71: warning: Port 6 (y) of isqrt expects 16 bits, got 32.
+05_06_formula_2_pipe_using_fifos.sv:71:        : Padding 16 high bits of the expression.
 05_06_formula_2_pipe_using_fifos.sv:88: warning: Port 6 (y) of isqrt expects 16 bits, got 32.
 05_06_formula_2_pipe_using_fifos.sv:88:        : Padding 16 high bits of the expression.
 --------------------------------------------------
@@ -20,17 +20,9 @@ testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     110 cycle    10
 testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     120 cycle    11                                         
 testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     130 cycle    12                                         
 testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     140 cycle    13                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     150 cycle    14                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     160 cycle    15                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     170 cycle    16                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     180 cycle    17                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     190 cycle    18                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     200 cycle    19                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     210 cycle    20                                         
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     220 cycle    21                                         
 testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: FAIL: res mismatch. Expected 1, actual 0
-testbenches/formula_tb.sv:313: $finish called at 230 (1s)
-testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     230 cycle    22testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: FAIL: did not run or run was not completed
+testbenches/formula_tb.sv:313: $finish called at 150 (1s)
+testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: time     150 cycle    14testbenches/formula_tb.sv formula 2 pipe 1 fifo 1: FAIL: did not run or run was not completed
 
 
-number of transfers : arg 1 res 1 per 17 cycles
+number of transfers : arg 1 res 1 per 9 cycles
